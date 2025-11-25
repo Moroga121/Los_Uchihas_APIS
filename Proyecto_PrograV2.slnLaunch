@@ -11,19 +11,15 @@
         "Action": "Start"
       },
       {
-        "Path": "Facturacion\\Facturacion.csproj",
-        "Action": "StartWithoutDebugging"
-      },
-      {
-        "Path": "Simulacion_Notas\\Simulacion_Notas.csproj",
+        "Path": "USR4_Modulos\\USR4_Modulos.csproj",
         "Action": "Start"
       },
       {
-        "Path": "Módulo_de_Oferta_académica_ACD5\\Módulo_de_Oferta_académica_ACD5.csproj",
+        "Path": "GEN01_Bitacora\\GEN01_Bitacora.csproj",
         "Action": "Start"
       },
       {
-        "Path": "Módulo_de_Oferta_académica_ACD1\\Módulo_de_Oferta_académica_ACD1.csproj",
+        "Path": "MAT01_Prematricula\\MAT01_Prematricula.csproj",
         "Action": "Start"
       },
       {
@@ -32,6 +28,10 @@
       },
       {
         "Path": "Módulo_de_Oferta_académica_ACD3\\Módulo_de_Oferta_académica_ACD3.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Oferta_académica_ACD5\\Módulo_de_Oferta_académica_ACD5.csproj",
         "Action": "Start"
       },
       {

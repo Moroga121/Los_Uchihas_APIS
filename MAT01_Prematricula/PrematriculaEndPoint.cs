@@ -386,12 +386,15 @@ namespace MAT01_Prematricula
             #region "ELIMINAR NO SE CAMBIÓ"
 
             // Eliminar Prematricula
-            group.MapDelete("/", async (
-             [FromServices] Services.IPrematriculaService service,
-             [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            group.MapDelete("/{id}", async (
+                int id,
+                [FromServices] Services.IPrematriculaService service,
+                [FromHeader(Name = "access_token")] string accessToken,
+                HttpClient httpClient) =>
             {
                 try
                 {
+                    // Validación del token
                     var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
@@ -399,12 +402,17 @@ namespace MAT01_Prematricula
 
                     if (!response.IsSuccessStatusCode)
                     {
-
                         return Results.Unauthorized();
-
                     }
 
-                    prematricula.Accion = "Eliminar";
+                    // Crear el objeto para enviar al CRUD
+                    var prematricula = new Entities.Prematricula
+                    {
+                        id_prematricula = id,
+                        Accion = "Eliminar"
+                    };
+
+                    // Llamar al método del servicio
                     var result = await service.CRUDPrematricula(prematricula);
                     return result;
                 }
