@@ -1,0 +1,6 @@
+@USR5_Login_HostAddress = http://localhost:5001
+
+GET {{USR5_Login_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,6 @@
+@Pagos_HostAddress = http://localhost:5281
+
+GET {{Pagos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

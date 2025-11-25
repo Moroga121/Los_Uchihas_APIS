@@ -1,0 +1,6 @@
+@Simulacion_Notas_HostAddress = http://localhost:5064
+
+GET {{Simulacion_Notas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

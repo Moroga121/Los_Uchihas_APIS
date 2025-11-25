@@ -1,0 +1,6 @@
+@USR3_Parametrización_HostAddress = http://localhost:5186
+
+GET {{USR3_Parametrización_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

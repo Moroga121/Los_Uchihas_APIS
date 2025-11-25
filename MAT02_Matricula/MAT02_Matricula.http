@@ -1,0 +1,6 @@
+@MAT02_Matricula_HostAddress = http://localhost:5105
+
+GET {{MAT02_Matricula_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

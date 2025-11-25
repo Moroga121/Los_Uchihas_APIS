@@ -1,0 +1,47 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "Proyecto_PrograV\\Proyecto_PrograV.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "USR5_Login\\USR5_Login.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Facturacion\\Facturacion.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "Simulacion_Notas\\Simulacion_Notas.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Oferta_académica_ACD5\\Módulo_de_Oferta_académica_ACD5.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Oferta_académica_ACD1\\Módulo_de_Oferta_académica_ACD1.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Ofertas_académica_ACD2\\Módulo_de_Ofertas_académica_ACD2.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Oferta_académica_ACD3\\Módulo_de_Oferta_académica_ACD3.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Oferta_académica_ACD4\\Módulo_de_Oferta_académica_ACD4.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Oferta_académica_ACD6\\Módulo_de_Oferta_académica_ACD6.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

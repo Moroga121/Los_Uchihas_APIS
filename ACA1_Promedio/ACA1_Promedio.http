@@ -1,0 +1,6 @@
+@ACA1_Promedio_HostAddress = http://localhost:5067
+
+GET {{ACA1_Promedio_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

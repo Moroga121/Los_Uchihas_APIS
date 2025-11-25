@@ -1,0 +1,6 @@
+@Módulo_de_Oferta_académica_ACD3_HostAddress = http://localhost:5266
+
+GET {{Módulo_de_Oferta_académica_ACD3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
