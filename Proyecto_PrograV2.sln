@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAT02_Matricula", "MAT02_Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pagos", "Pagos\Pagos.csproj", "{BBD5F3BF-306F-655F-B5A7-C9A4FD925283}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAT01_Prematricula", "MAT01_Prematricula\MAT01_Prematricula.csproj", "{B7FB78F6-C234-9087-0BB6-4320B4139630}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{BBD5F3BF-306F-655F-B5A7-C9A4FD925283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBD5F3BF-306F-655F-B5A7-C9A4FD925283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBD5F3BF-306F-655F-B5A7-C9A4FD925283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FB78F6-C234-9087-0BB6-4320B4139630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FB78F6-C234-9087-0BB6-4320B4139630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FB78F6-C234-9087-0BB6-4320B4139630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FB78F6-C234-9087-0BB6-4320B4139630}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

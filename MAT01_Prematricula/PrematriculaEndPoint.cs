@@ -1,0 +1,523 @@
+﻿using MAT01_Prematricula.Entities;
+using MAT01_Prematricula.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json;
+namespace MAT01_Prematricula
+{
+    public static class PrematriculaEndPoint
+    {
+        public static void MapPrematriculaEndpoints(this IEndpointRouteBuilder routes)
+        {
+            var group = routes.MapGroup("/Prematricula").WithTags(nameof(Prematricula));
+
+            // Obtener todas las Prematriculas
+
+            group.MapGet("/", async ([FromServices] Services.IPrematriculaService service, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                try
+                {
+                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    request.Headers.Add("access_token", accessToken);
+
+                    var response = await httpClient.SendAsync(request);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+
+                        return Results.Unauthorized();
+
+                    }
+
+                    var result = await service.Obtener_Todas_Prematriculas();
+                    return Results.Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(new { mensaje = ex.Message });
+                }
+            })
+            .WithName("GetAllPrematriculas")
+            .WithOpenApi();
+
+
+            // Obtener Prematricula por ID
+            group.MapGet("/{Id_Prematricula}", async (
+                [FromServices] Services.IPrematriculaService service,
+                [FromRoute] string Id_Prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                try
+                {
+                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    request.Headers.Add("access_token", accessToken);
+
+                    var response = await httpClient.SendAsync(request);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+
+                        return Results.Unauthorized();
+
+                    }
+                    var (prematricula, mensaje) = await service.Obtener_Prematricula_Por_ID(Id_Prematricula);
+                    if (prematricula == null)
+                    {
+                        return Results.NotFound(new { mensaje = mensaje });
+                    }
+                    return Results.Ok(prematricula);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(new { mensaje = ex.Message });
+                }
+            })
+                .WithName("GetPrematriculaById")
+                .WithOpenApi();
+
+
+            #region "CRUD Actualizada"
+
+            #region "CREAR PREMATRICULAS"
+
+            // Crear Prematricula
+
+            group.MapPost("/", async ([FromServices] Services.IPrematriculaService service, [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                try
+                {
+                    // Validar token 
+                    var authRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    authRequest.Headers.Add("access_token", accessToken);
+
+                    var authResponse = await httpClient.SendAsync(authRequest);
+
+                    if (!authResponse.IsSuccessStatusCode)
+                    {
+                        return Results.Unauthorized();
+                    }
+
+                    // Validar Estudiante
+
+                    var estudianteRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:5000/usuario/id/{Uri.EscapeDataString(prematricula.numero_identificacion)}");
+                    estudianteRequest.Headers.Add("access_token", accessToken);
+
+                    var estudianteResponse = await httpClient.SendAsync(estudianteRequest);
+
+                    
+                    if (estudianteResponse.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return Results.BadRequest(new { mensaje = "El estudiante no existe" });
+                    }
+
+                    
+                    if (!estudianteResponse.IsSuccessStatusCode)
+                    {
+                        return Results.BadRequest(new { mensaje = "Error validando el estudiante en la API externa" });
+                    }
+
+                    
+
+                    
+                    var estudianteJson = await estudianteResponse.Content.ReadAsStringAsync();
+                    var estudiante = JsonSerializer.Deserialize<Usuario>(estudianteJson);
+
+                    
+                    if (!string.Equals(estudiante!.Rol_Usuario, "Estudiante", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Results.BadRequest(new { mensaje = "El usuario no tiene rol de estudiante" });
+                    }
+
+
+                   
+                    // Validar Carrera
+                    
+                    var carreraRequest = new HttpRequestMessage(
+                        HttpMethod.Get,
+                        $"http://localhost:7006/api/carrera/validar?nombre={prematricula.carrera}"
+                    );
+                    carreraRequest.Headers.Add("access_token", accessToken);
+
+                    var carreraResponse = await httpClient.SendAsync(carreraRequest);
+
+                    if (carreraResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return Results.BadRequest(new { mensaje = "la carrera no existe" });
+                    }
+
+                    if (!carreraResponse.IsSuccessStatusCode)
+                    {
+                        return Results.BadRequest(new { mensaje = "Error validando la carrera en la API externa" });
+                    }
+
+                    // Validar curso y que coincida con la carrera
+
+                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7001/api/curso/validar?nombre={Uri.EscapeDataString(prematricula.curso)}");
+                    cursoRequest.Headers.Add("access_token", accessToken);
+                    var cursoResponse = await httpClient.SendAsync(cursoRequest);
+
+                    if (cursoResponse.StatusCode == HttpStatusCode.NotFound)
+                    {
+
+                        return Results.BadRequest(new { mensaje = "El curso no existe" });
+
+                    }
+                        if (!cursoResponse.IsSuccessStatusCode)
+                    {
+
+                        return Results.BadRequest(new { mensaje = "Error validando el curso" });
+
+                    }
+                        
+
+                    var cursoJson = await cursoResponse.Content.ReadAsStringAsync();
+                    var curso = JsonSerializer.Deserialize<Curso>(cursoJson);
+
+                    var carreraJson = await carreraResponse.Content.ReadAsStringAsync();
+                    var carrera = JsonSerializer.Deserialize<Carrera>(carreraJson);
+
+                    // Validar que el curso pertenezca a la carrera
+                    if (!string.Equals(curso!.ID_Carrera, carrera!.iD_Carrera, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Results.BadRequest(new { mensaje = "El curso no pertenece a la carrera seleccionada" });
+                    }
+
+
+
+                    // Validar Periodo
+
+                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7004/api/periodo/validar?id={Uri.EscapeDataString(prematricula.Id_Periodo)}");
+
+                    periodoRequest.Headers.Add("access_token", accessToken);
+
+                    var periodoResponse = await httpClient.SendAsync(periodoRequest);
+
+                    if (periodoResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return Results.BadRequest(new { mensaje = "El periodo no existe" });
+                    }
+
+                    if (!periodoResponse.IsSuccessStatusCode)
+                    {
+                        return Results.BadRequest(new { mensaje = "Error validando el periodo en la API externa" });
+                    }
+
+                    // Leer el contenido y deserializar en la clase Periodo
+                    var periodoJson = await periodoResponse.Content.ReadAsStringAsync();
+                    var periodo = JsonSerializer.Deserialize<Periodo>(periodoJson);
+
+                    if (periodo == null)
+                    {
+                        return Results.BadRequest(new { mensaje = "Periodo inválido" });
+                    }
+
+                    // Validar que el periodo sea futuro
+                    if (periodo.Fecha_Inicio <= DateTime.Today)
+                    {
+                        return Results.BadRequest(new { mensaje = "Solo se pueden prematricular periodos futuros" });
+                    }
+
+                    prematricula.Accion = "Crear";
+                    var result = await service.CRUDPrematricula(prematricula);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(new { mensaje = ex.Message });
+                }
+            })
+            .WithName("RealizarPrematricula")
+            .WithOpenApi();
+
+
+            #endregion
+
+            #region "ACTUALIZAR PREMATRICULA"
+
+            // Actualizar Prematricula con validaciones
+            group.MapPut("/", async ([FromServices] Services.IPrematriculaService service, [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                try
+                {
+                    
+                    var authRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    authRequest.Headers.Add("access_token", accessToken);
+
+                    var authResponse = await httpClient.SendAsync(authRequest);
+                    if (!authResponse.IsSuccessStatusCode)
+                    {
+                        return Results.Unauthorized();
+                    }
+
+                    
+                    var estudianteRequest = new HttpRequestMessage(HttpMethod.Get,$"http://localhost:5000/usuario/id/{Uri.EscapeDataString(prematricula.numero_identificacion)}");
+                    
+                    estudianteRequest.Headers.Add("access_token", accessToken);
+
+                    var estudianteResponse = await httpClient.SendAsync(estudianteRequest);
+
+                    if (estudianteResponse.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return Results.BadRequest(new { mensaje = "El estudiante no existe" });
+                    }
+                        
+
+                    if (!estudianteResponse.IsSuccessStatusCode)
+                    {
+
+                        return Results.BadRequest(new { mensaje = "Error validando el estudiante en la API externa" });
+
+                    }
+                        
+                    var estudianteJson = await estudianteResponse.Content.ReadAsStringAsync();
+                    var estudiante = JsonSerializer.Deserialize<Usuario>(estudianteJson);
+
+                    if (!string.Equals(estudiante!.Rol_Usuario, "Estudiante", StringComparison.OrdinalIgnoreCase))
+                    {
+
+                        return Results.BadRequest(new { mensaje = "El usuario no tiene rol de estudiante" });
+
+                    }
+                        
+                    var carreraRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7006/api/carrera/validar?nombre={Uri.EscapeDataString(prematricula.carrera)}");
+                    
+                    carreraRequest.Headers.Add("access_token", accessToken);
+
+                    var carreraResponse = await httpClient.SendAsync(carreraRequest);
+
+                    if (carreraResponse.StatusCode == HttpStatusCode.NotFound)
+                    {
+
+                        return Results.BadRequest(new { mensaje = "La carrera no existe" });
+
+                    }
+                        
+                    if (!carreraResponse.IsSuccessStatusCode)
+                    {
+
+                        return Results.BadRequest(new { mensaje = "Error validando la carrera en la API externa" });
+
+                    }
+
+
+
+                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7001/api/curso/validar?nombre={Uri.EscapeDataString(prematricula.curso)}");
+                    cursoRequest.Headers.Add("access_token", accessToken);
+                    var cursoResponse = await httpClient.SendAsync(cursoRequest);
+
+                    if (cursoResponse.StatusCode == HttpStatusCode.NotFound)
+                    {
+
+                        return Results.BadRequest(new { mensaje = "El curso no existe" });
+
+                    }
+                    if (!cursoResponse.IsSuccessStatusCode)
+                    {
+
+                        return Results.BadRequest(new { mensaje = "Error validando el curso" });
+
+                    }
+
+
+                    var cursoJson = await cursoResponse.Content.ReadAsStringAsync();
+                    var curso = JsonSerializer.Deserialize<Curso>(cursoJson);
+
+                    var carreraJson = await carreraResponse.Content.ReadAsStringAsync();
+                    var carrera = JsonSerializer.Deserialize<Carrera>(carreraJson);
+
+                    // Validar que el curso pertenezca a la carrera
+                    if (!string.Equals(curso!.ID_Carrera, carrera!.iD_Carrera, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Results.BadRequest(new { mensaje = "El curso no pertenece a la carrera seleccionada" });
+                    }
+
+
+
+                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7004/api/periodo/validar?id={Uri.EscapeDataString(prematricula.Id_Periodo)}");
+
+                    periodoRequest.Headers.Add("access_token", accessToken);
+
+                    var periodoResponse = await httpClient.SendAsync(periodoRequest);
+
+                    if (periodoResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return Results.BadRequest(new { mensaje = "El periodo no existe" });
+                    }
+
+                    if (!periodoResponse.IsSuccessStatusCode)
+                    {
+                        return Results.BadRequest(new { mensaje = "Error validando el periodo en la API externa" });
+                    }
+
+                    // Leer el contenido y deserializar en la clase Periodo
+                    var periodoJson = await periodoResponse.Content.ReadAsStringAsync();
+                    var periodo = JsonSerializer.Deserialize<Periodo>(periodoJson);
+
+                    if (periodo == null)
+                    {
+                        return Results.BadRequest(new { mensaje = "Periodo inválido" });
+                    }
+
+                    // Validar que el periodo sea futuro
+                    if (periodo.Fecha_Inicio <= DateTime.Today)
+                    {
+                        return Results.BadRequest(new { mensaje = "Solo se pueden prematricular periodos futuros" });
+                    }
+
+
+
+                    prematricula.Accion = "Actualizar";
+                    var result = await service.CRUDPrematricula(prematricula);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(new { mensaje = ex.Message });
+                }
+            })
+            .WithName("UpdatePrematricula")
+            .WithOpenApi();
+
+
+            #endregion
+
+            #region "ELIMINAR NO SE CAMBIÓ"
+
+            // Eliminar Prematricula
+            group.MapDelete("/", async (
+             [FromServices] Services.IPrematriculaService service,
+             [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                try
+                {
+                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    request.Headers.Add("access_token", accessToken);
+
+                    var response = await httpClient.SendAsync(request);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+
+                        return Results.Unauthorized();
+
+                    }
+
+                    prematricula.Accion = "Eliminar";
+                    var result = await service.CRUDPrematricula(prematricula);
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(new { mensaje = ex.Message });
+                }
+            });
+
+            #endregion
+
+            #endregion
+
+            #region "CRUD Desactualizada"
+
+            //group.MapPost("/", async (
+            //    [FromServices] Services.IPrematriculaService service,
+            //    [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            //{
+            //    try
+            //    {
+            //        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+            //        request.Headers.Add("access_token", accessToken);
+
+            //        var response = await httpClient.SendAsync(request);
+
+            //        if (!response.IsSuccessStatusCode)
+            //        {
+
+            //            return Results.Unauthorized();
+
+            //        }
+
+            //        prematricula.Accion = "Crear";
+            //        var result = await service.CRUDPrematricula(prematricula);
+            //        return result;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return Results.BadRequest(new { mensaje = ex.Message });
+            //    }
+            //})
+            //.WithName("RealizarPrematricula")
+            //.WithOpenApi();
+
+
+
+            // Actualizar Prematricula
+
+            //   group.MapPut("/", async (
+            //    [FromServices] Services.IPrematriculaService service,
+            //    [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            //   {
+            //       try
+            //       {
+            //           var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+            //           request.Headers.Add("access_token", accessToken);
+
+            //           var response = await httpClient.SendAsync(request);
+
+            //           if (!response.IsSuccessStatusCode)
+            //           {
+
+            //               return Results.Unauthorized();
+
+            //           }
+
+            //           prematricula.Accion = "Actualizar";
+            //           var result = await service.CRUDPrematricula(prematricula);
+            //           return result;
+            //       }
+            //       catch (Exception ex)
+            //       {
+            //           return Results.BadRequest(new { mensaje = ex.Message });
+            //       }
+            //   })
+            //.WithName("UpdatePrematricula")
+            //.WithOpenApi();
+
+
+
+            //// Eliminar Prematricula
+            //group.MapDelete("/", async (
+            // [FromServices] Services.IPrematriculaService service,
+            // [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            //{
+            //    try
+            //    {
+            //        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+            //        request.Headers.Add("access_token", accessToken);
+
+            //        var response = await httpClient.SendAsync(request);
+
+            //        if (!response.IsSuccessStatusCode)
+            //        {
+
+            //            return Results.Unauthorized();
+
+            //        }
+
+            //        prematricula.Accion = "Eliminar";
+            //        var result = await service.CRUDPrematricula(prematricula);
+            //        return result;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return Results.BadRequest(new { mensaje = ex.Message });
+            //    }
+            //});
+
+            #endregion
+
+        }
+
+    }
+}

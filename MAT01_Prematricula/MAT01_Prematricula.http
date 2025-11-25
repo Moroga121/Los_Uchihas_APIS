@@ -1,0 +1,6 @@
+@MAT01_Prematricula_HostAddress = http://localhost:5295
+
+GET {{MAT01_Prematricula_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
