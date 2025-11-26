@@ -41,6 +41,26 @@
       {
         "Path": "Módulo_de_Oferta_académica_ACD6\\Módulo_de_Oferta_académica_ACD6.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "MAT05_Notas\\MAT05_Notas.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Módulo_de_Oferta_académica_ACD1\\Módulo_de_Oferta_académica_ACD1.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "MAT02_Matricula\\MAT02_Matricula.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "MAT03_Expedientes\\MAT03_Expedientes.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "MAT04_Direcciones\\MAT04_Direcciones.csproj",
+        "Action": "Start"
       }
     ]
   }

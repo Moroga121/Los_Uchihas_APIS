@@ -1,0 +1,6 @@
+@MAT04_Direcciones_HostAddress = http://localhost:5208
+
+GET {{MAT04_Direcciones_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

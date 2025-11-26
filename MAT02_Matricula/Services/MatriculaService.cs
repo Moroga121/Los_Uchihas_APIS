@@ -67,11 +67,23 @@ namespace MAT02_Matricula.Services
             return Results.BadRequest(new { mensaje = mensajeSP });
 
         }
+
+        public async Task<IEnumerable<MatriculaCompleta>> Obtener_Matriculados_Por_Curso_Grupo(string curso, string grupo)
+        {
+            if (string.IsNullOrWhiteSpace(curso))
+                throw new ArgumentException("El curso es obligatorio");
+
+            if (string.IsNullOrWhiteSpace(grupo))
+                throw new ArgumentException("El grupo es obligatorio");
+
+            return await _matriculaRepository.Obtener_Matriculados_Por_Curso_Grupo(curso, grupo);
+        }
+
         public async Task<IEnumerable<MatriculaCompleta>> Obtener_Todas_Matriculas()
         {
             return await _matriculaRepository.Obtener_Todas_Matriculas();
         }
-      
+
         public IResult? ValidarDatos(Matricula matricula)
         {
             if (string.IsNullOrEmpty(matricula.numero_identificacion))

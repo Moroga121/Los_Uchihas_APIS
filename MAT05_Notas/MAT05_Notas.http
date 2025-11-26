@@ -1,0 +1,6 @@
+@MAT05_Notas_HostAddress = http://localhost:5274
+
+GET {{MAT05_Notas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

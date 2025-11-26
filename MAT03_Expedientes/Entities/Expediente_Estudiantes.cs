@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MAT02_Matricula.Entities
+namespace MAT03_Expedientes.Entities
 {
     public class Expediente_Estudiantes
     {
@@ -16,5 +16,25 @@ namespace MAT02_Matricula.Entities
         public string? telefono { get; set; }
         [JsonIgnore]
         public string? Accion { get; set; } = null!;
+
     }
+
+    public class Usuario
+    {
+        [JsonPropertyName("identificacion")]
+        public string Identificacion { get; set; }
+
+        [JsonPropertyName("tipo_Identificacion")]
+        public string Tipo_Identificacion { get; set; }
+
+        [JsonPropertyName("rol_Usuario")]
+        public string Rol_Usuario { get; set; } = null!;
+
+        [JsonPropertyName("nombre")]
+        public string Nombre { get; set; }
+
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+    }
+
 }

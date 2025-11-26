@@ -34,6 +34,32 @@ namespace MAT02_Matricula.Repository
             }
         }
 
+
+        public async Task<IEnumerable<MatriculaCompleta>> Obtener_Matriculados_Por_Curso_Grupo(string curso, string grupo)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            {
+                var resultado = await connection.QueryAsync<Matricula, Expediente_Estudiantes, MatriculaCompleta>("SP_ObtenerMatriculadosPorCursoGrupo", (matricula, estudiante) => new MatriculaCompleta
+                {
+                    Id_matricula = matricula.Id_matricula,
+                    Curso = matricula.curso,
+                    Grupo = matricula.grupo,
+                    estudiante = estudiante
+                },
+                    param: new
+                    {
+                        p_curso = curso,
+                        p_grupo = grupo
+                    },
+                    splitOn: "numero_identificacion",
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return resultado;
+            }
+        }
+
+
         public async Task<(Matricula? creada, string mensaje)> CRUDMatricula(Matricula matricula)
         {
             try

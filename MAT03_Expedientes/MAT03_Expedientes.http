@@ -1,0 +1,6 @@
+@MAT03_Expedientes_HostAddress = http://localhost:5243
+
+GET {{MAT03_Expedientes_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
