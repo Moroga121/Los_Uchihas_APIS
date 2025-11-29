@@ -262,7 +262,7 @@ namespace MAT03_Expedientes
 
             // Eliminar expediente
 
-            group.MapDelete("/", async ([FromServices] Services.IExpediente_EstudianteService service, [FromBody] Entities.Expediente_Estudiantes expediente, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            group.MapDelete("/{id}", async (string id, [FromServices] Services.IExpediente_EstudianteService service,[FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
                 try
                 {
@@ -277,7 +277,14 @@ namespace MAT03_Expedientes
                         return Results.Unauthorized();
 
                     }
-                    expediente.Accion = "Eliminar";
+
+                    var expediente = new Entities.Expediente_Estudiantes
+                    {
+                        numero_identificacion = id,
+                        Accion = "Eliminar"
+                    };
+
+                    
                     var result = await service.CRUDExpediente(expediente);
                     return result;
                 }

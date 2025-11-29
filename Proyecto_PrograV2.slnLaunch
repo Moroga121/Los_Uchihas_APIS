@@ -61,6 +61,10 @@
       {
         "Path": "MAT04_Direcciones\\MAT04_Direcciones.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "USR2_Roles\\USR2_Roles.csproj",
+        "Action": "Start"
       }
     ]
   }
