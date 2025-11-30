@@ -150,19 +150,13 @@ namespace MAT05_Notas
                         {
                             var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
                             request.Headers.Add("access_token", accessToken);
-
                             var response = await httpClient.SendAsync(request);
-
                             if (!response.IsSuccessStatusCode)
                             {
-
                                 return Results.Unauthorized();
-
                             }
-                            var result = await service.Obtener_Desglose_Por_ID(grupo, curso);
-                           
+                            var result = await service.Obtener_Desglose_Por_ID(grupo, curso);                       
                                return result;
-
                         }
                         catch (Exception ex)
                         {

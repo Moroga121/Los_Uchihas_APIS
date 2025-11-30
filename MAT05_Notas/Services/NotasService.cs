@@ -99,27 +99,36 @@ namespace MAT05_Notas.Services
 
         public async Task<IResult> Obtener_Desglose_Por_ID(string grupo, string curso)
         {
-            if (string.IsNullOrWhiteSpace(grupo))
-                return Results.BadRequest(new { mensaje = "El grupo es obligatorio." });
-            if (grupo.Length > 20)
-                return Results.BadRequest(new { mensaje = "El grupo no puede superar los 20 caracteres." });
+            try
+            {
+                if (string.IsNullOrWhiteSpace(grupo))
+                    return Results.BadRequest(new { mensaje = "El grupo es obligatorio." });
+                if (grupo.Length > 20)
+                    return Results.BadRequest(new { mensaje = "El grupo no puede superar los 20 caracteres." });
 
-            if (string.IsNullOrWhiteSpace(curso))
-                return Results.BadRequest(new { mensaje = "El curso es obligatorio." });
-            if (curso.Length > 50)
-                return Results.BadRequest(new { mensaje = "El curso no puede superar los 50 caracteres." });
+                if (string.IsNullOrWhiteSpace(curso))
+                    return Results.BadRequest(new { mensaje = "El curso es obligatorio." });
+                if (curso.Length > 50)
+                    return Results.BadRequest(new { mensaje = "El curso no puede superar los 50 caracteres." });
 
-            var (desgloserubro, mensaje) = await _notasRepository.Obtener_Desglose_Por_ID(grupo, curso);
+                var (desgloserubro, mensaje) = await _notasRepository.Obtener_Desglose_Por_ID(grupo, curso);
 
-            if (desgloserubro != null)
-                return Results.Ok(new { mensaje, data = desgloserubro });
+                if (mensaje == "Desglose encontrado correctamente.")
+                    return Results.Ok(new { mensaje, data = desgloserubro });
 
-            return Results.NotFound(new { mensaje });
+                return Results.BadRequest(new { mensaje });
+            }
+            catch (Exception ex)
+            {
+                return Results.NotFound(new { mensaje = ex.Message });
+            }
         }
 
         public async Task<IResult> Obtener_Notas_By_Id(string numero_identificacion, string curso)
         {
-            if (string.IsNullOrWhiteSpace(numero_identificacion))
+            try
+            {
+                if (string.IsNullOrWhiteSpace(numero_identificacion))
                 return Results.BadRequest(new { mensaje = "El número de identificación es obligatorio." });
             if (numero_identificacion.Length > 22)
                 return Results.BadRequest(new { mensaje = "El número de identificación no puede superar los 22 caracteres." });
@@ -131,10 +140,15 @@ namespace MAT05_Notas.Services
 
             var (notas, mensaje) = await _notasRepository.Obtener_Notas_By_Id(numero_identificacion, curso);
 
-            if (notas != null && notas.Any())
+            if (mensaje == "Notas obtenidas correctamente para el estudiante.")
                 return Results.Ok(new { mensaje, data = notas });
 
-            return Results.NotFound(new { mensaje });
+            return Results.BadRequest(new { mensaje });
+        }
+            catch (Exception ex)
+            {
+                return Results.NotFound(new { mensaje = ex.Message });
+            }
         }
         #region Bitacora
 

@@ -50,7 +50,7 @@ namespace MAT05_Notas.Repository
                             return (mensaje, new List<DesgloseRubro>());
                         }
 
-                        // ✔ Solo agregar cuando el SP devuelva objetos
+                        //Solo agregar cuando el SP devuelva objetos
                         if (rubrosCreados.Any())
                         {
                             objetosCreados.Add(new DesgloseRubro
