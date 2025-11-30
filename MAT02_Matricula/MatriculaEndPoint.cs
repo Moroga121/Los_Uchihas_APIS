@@ -159,10 +159,10 @@ namespace MAT02_Matricula
 
                     }
 
-                    if (periodo.Fecha_Inicio <= DateTime.Today)
+                    if (periodo.Fecha_Inicio >= DateTime.Today)
                     {
 
-                        return Results.BadRequest(new { mensaje = "Solo se pueden matricular periodos futuros" });
+                        return Results.BadRequest(new { mensaje = "Solo se pueden matricular periodos activos" });
 
                     }
 
