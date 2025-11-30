@@ -80,64 +80,138 @@ namespace MAT03_Expedientes.Services
         public IResult? ValidarDatos(Expediente_Estudiantes expediente_Estudiantes, string dominioPermitido = "cuc.cr")
         {
             if (string.IsNullOrEmpty(expediente_Estudiantes.numero_identificacion))
-                return Results.BadRequest("El número de identificación es obligatorio.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El número de identificación es obligatorio." });
+
+            }
+                
             if (string.IsNullOrEmpty(expediente_Estudiantes.tipo_identificacion))
-                return Results.BadRequest("El tipo de identificación es obligatorio.");
+            {
+                return Results.BadRequest(new { mensaje = "El tipo de identificación es obligatorio." });
+            }
             if (string.IsNullOrEmpty(expediente_Estudiantes.email))
-                return Results.BadRequest("El email es obligatorio.");
+            {
+                return Results.BadRequest(new { mensaje = "El email es obligatorio." });
+            }
+                
             if (string.IsNullOrEmpty(expediente_Estudiantes.nombre))
-                return Results.BadRequest("El nombre es obligatorio.");
-            //if (string.IsNullOrEmpty(expediente_Estudiantes.primer_apellido))
-            //    return Results.BadRequest("El primer apellido es obligatorio.");
-            //if (string.IsNullOrEmpty(expediente_Estudiantes.segundo_apellido))
-            //    return Results.BadRequest("El segundo apellido es obligatorio.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El nombre es obligatorio." });
+
+            }
+
+
             if (expediente_Estudiantes.fecha_nacimiento == null)
-                return Results.BadRequest("La fecha de nacimiento es obligatoria.");
+            {
+                return Results.BadRequest(new { mensaje = "La fecha de nacimiento es obligatoria." });
+            }
+                
             if (expediente_Estudiantes.id_distrito == null || expediente_Estudiantes.id_distrito <= 0)
-                return Results.BadRequest("Debe seleccionar un distrito válido.");
+            {
+                return Results.BadRequest(new { mensaje = "Debe seleccionar un distrito válido." });
+            }
+                
             if (string.IsNullOrEmpty(expediente_Estudiantes.otras_senas))
-                return Results.BadRequest("Las otras señas son obligatorias.");
+            {
+                return Results.BadRequest(new { mensaje = "Las otras señas son obligatorias." });
+
+            }
+                
             if (string.IsNullOrEmpty(expediente_Estudiantes.telefono))
-                return Results.BadRequest("El teléfono es obligatorio.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El teléfono es obligatorio." });
+
+            }
 
             if (!string.IsNullOrEmpty(expediente_Estudiantes.numero_identificacion) && expediente_Estudiantes.numero_identificacion.Length > 22)
-                return Results.BadRequest("El número de identificación no puede exceder 22 caracteres.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El número de identificación no puede exceder 22 caracteres." });
+
+            }
+
             if (!string.IsNullOrEmpty(expediente_Estudiantes.tipo_identificacion) && expediente_Estudiantes.tipo_identificacion.Length > 20)
-                return Results.BadRequest("El tipo de identificación no puede exceder 20 caracteres.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El tipo de identificación no puede exceder 20 caracteres." });
+
+            }
+                
             if (!string.IsNullOrEmpty(expediente_Estudiantes.email) && expediente_Estudiantes.email.Length > 100)
-                return Results.BadRequest("El email no puede exceder 100 caracteres.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El email no puede exceder 100 caracteres." });
+
+            }
+                
             if (!string.IsNullOrEmpty(expediente_Estudiantes.nombre) && expediente_Estudiantes.nombre.Length > 100)
-                return Results.BadRequest("El nombre no puede exceder 100 caracteres.");
-            //if (!string.IsNullOrEmpty(expediente_Estudiantes.primer_apellido) && expediente_Estudiantes.primer_apellido.Length > 100)
-            //    return Results.BadRequest("El primer apellido no puede exceder 100 caracteres.");
-            //if (!string.IsNullOrEmpty(expediente_Estudiantes.segundo_apellido) && expediente_Estudiantes.segundo_apellido.Length > 100)
-            //    return Results.BadRequest("El segundo apellido no puede exceder 100 caracteres.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El nombre no puede exceder 100 caracteres." });
+
+            }
+                
+            
             if (!string.IsNullOrEmpty(expediente_Estudiantes.otras_senas) && expediente_Estudiantes.otras_senas.Length > 255)
-                return Results.BadRequest("Las otras señas no pueden exceder 255 caracteres.");
+            {
+
+                return Results.BadRequest(new { mensaje = "Las otras señas no pueden exceder 255 caracteres." });
+
+            }
+                
             if (!string.IsNullOrEmpty(expediente_Estudiantes.telefono) && expediente_Estudiantes.telefono.Length > 20)
-                return Results.BadRequest("El teléfono no puede exceder 20 caracteres.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El teléfono no puede exceder 20 caracteres." });
+
+            }
+                
 
             var formatoEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
             if (!string.IsNullOrEmpty(expediente_Estudiantes.email) && !System.Text.RegularExpressions.Regex.IsMatch(expediente_Estudiantes.email, formatoEmail))
-                return Results.BadRequest("El formato del email no es válido.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El formato del email no es válido." });
+
+            }
+                
 
             if (!string.IsNullOrEmpty(expediente_Estudiantes.email) && !expediente_Estudiantes.email.EndsWith("@" + dominioPermitido, StringComparison.OrdinalIgnoreCase))
-                return Results.BadRequest($"El email debe pertenecer al dominio {dominioPermitido}.");
+            {
+
+                return Results.BadRequest(new { mensaje = $"El email debe pertenecer al dominio {dominioPermitido}." });
+
+            }
+
 
             var soloLetrasYEspacios = @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$";
             if (!string.IsNullOrEmpty(expediente_Estudiantes.nombre) && !System.Text.RegularExpressions.Regex.IsMatch(expediente_Estudiantes.nombre, soloLetrasYEspacios))
-                return Results.BadRequest("El nombre completo solo puede contener letras y espacios.");
-            //if (!string.IsNullOrEmpty(expediente_Estudiantes.primer_apellido) && !System.Text.RegularExpressions.Regex.IsMatch(expediente_Estudiantes.primer_apellido, soloLetrasYEspacios))
-            //    return Results.BadRequest("El nombre completo solo puede contener letras y espacios.");
-            //if (!string.IsNullOrEmpty(expediente_Estudiantes.segundo_apellido) && !System.Text.RegularExpressions.Regex.IsMatch(expediente_Estudiantes.segundo_apellido, soloLetrasYEspacios))
-            //    return Results.BadRequest("El nombre completo solo puede contener letras y espacios.");
+            {
+
+                return Results.BadRequest(new { mensaje = "El nombre completo solo puede contener letras y espacios." });
+
+            }
+                
+            
 
             if (expediente_Estudiantes.fecha_nacimiento != null && expediente_Estudiantes.fecha_nacimiento > DateTime.Now)
-                return Results.BadRequest("La fecha de nacimiento no puede ser futura.");
+            {
+
+                return Results.BadRequest(new { mensaje = "La fecha de nacimiento no puede ser futura." });
+
+
+            }
 
             if (!string.IsNullOrEmpty(expediente_Estudiantes.telefono) && expediente_Estudiantes.telefono.Length < 8)
-                return Results.BadRequest("El teléfono debe tener al menos 8 dígitos.");
+            {
 
+                return Results.BadRequest(new { mensaje = "El teléfono debe tener al menos 8 dígitos." });
+
+            }
+               
             return null;
         }
         #region Bitacora
