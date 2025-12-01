@@ -19,7 +19,7 @@ namespace MAT05_Notas
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -65,6 +65,12 @@ namespace MAT05_Notas
 
                     desglose.Accion = "Crear";
                     var result = await service.Cargar_Desglose(desglose);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Cargar desglose de rubros",
+                       descripcion: desglose,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -85,7 +91,7 @@ namespace MAT05_Notas
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -98,6 +104,12 @@ namespace MAT05_Notas
                     }
                     nota.Accion = "Crear";
                     var result = await service.Asignar_Actualizar_Nota(nota);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Crear nota",
+                       descripcion: nota,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -114,7 +126,7 @@ namespace MAT05_Notas
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -127,6 +139,12 @@ namespace MAT05_Notas
                     }
                     nota.Accion = "Actualizar";
                     var result = await service.Asignar_Actualizar_Nota(nota);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Actualizar nota",
+                       descripcion: nota,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -148,15 +166,21 @@ namespace MAT05_Notas
                     {
                         try
                         {
-                            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                            var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                             request.Headers.Add("access_token", accessToken);
                             var response = await httpClient.SendAsync(request);
                             if (!response.IsSuccessStatusCode)
                             {
                                 return Results.Unauthorized();
                             }
-                            var result = await service.Obtener_Desglose_Por_ID(grupo, curso);                       
-                               return result;
+                            var result = await service.Obtener_Desglose_Por_ID(grupo, curso);
+                            // Registrar intento exitoso en la bitacora del login
+                            await service.RegistrarBitacoraAsync(
+                               accion: "Obtener desglose por id",
+                               descripcion: result,
+                               accessToken: accessToken
+                           );
+                            return result;
                         }
                         catch (Exception ex)
                         {
@@ -177,7 +201,7 @@ namespace MAT05_Notas
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -189,7 +213,12 @@ namespace MAT05_Notas
 
                     }
                     var result = await service.Obtener_Notas_By_Id(numero_identificacion, curso);
-
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Obtener notas por id",
+                       descripcion: result,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)

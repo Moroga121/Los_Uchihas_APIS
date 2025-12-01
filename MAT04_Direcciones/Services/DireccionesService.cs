@@ -1,15 +1,24 @@
 ﻿using MAT04_Direcciones.Entities;
 using MAT04_Direcciones.Repository;
 using MySqlX.XDevAPI.Common;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 
 namespace MAT04_Direcciones.Services
 {
     public class DireccionesService : IDireccionesService
     {
         private readonly DireccionesRepository _direccionesRepository;
-        public DireccionesService(DireccionesRepository direccionesRepository)
+        private readonly HttpClient _httpClient;
+
+        public DireccionesService(DireccionesRepository direccionesRepository, HttpClient httpClient)
         {
             _direccionesRepository = direccionesRepository;
+            _httpClient = httpClient;
+
+            if (_httpClient.BaseAddress == null)
+                _httpClient.BaseAddress = new Uri("https://tiusr21pl.cuc-carrera-ti.ac.cr/GEN01Bitacora/");
         }
         public async Task<IEnumerable<Entities.Provincias>> Obtener_Todos_Provincias()
         {
@@ -44,6 +53,49 @@ namespace MAT04_Direcciones.Services
 
             return (distritos, mensajeSP);
         }
+        #region Bitacora
 
+        public async Task<(bool, string mensaje)> RegistrarBitacoraAsync(string accion, object descripcion, string accessToken, CancellationToken ct = default)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/GEN01Bitacora/bitacora/registrar");
+
+            // Agregar token al header
+            request.Headers.Add("access_token", accessToken);
+
+            // Crear el JSON a enviar
+            var body = new
+            {
+                Accion = accion,
+                Descripcion = descripcion
+            };
+
+            // Serializar a JSON
+            var json = JsonSerializer.Serialize(body);
+            request.Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request, ct);
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, "Bitácora registrada exitosamente");
+                }
+                else
+                {
+                    var payload = await response.Content.ReadFromJsonAsync<Dictionary<string, string?>>(cancellationToken: ct);
+                    if (payload != null && payload.TryGetValue("mensaje", out var m))
+                    {
+                        return (false, m ?? "Error desconocido al registrar bitácora");
+                    }
+                    return (false, "Error desconocido al registrar bitácora");
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Error al procesar la respuesta de la API: {ex.Message}");
+            }
+        }
+
+        #endregion
     }
 }

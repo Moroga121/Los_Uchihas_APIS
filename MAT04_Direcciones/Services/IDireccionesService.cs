@@ -8,7 +8,10 @@ namespace MAT04_Direcciones.Services
         Task<(IEnumerable<Entities.cantones> cantones, string mensaje)> Obtener_Cantones_Por_Provincia(string provincia);
 
         Task<(IEnumerable<Entities.distritos> distritos, string mensaje)> Obtener_Distritos_Por_Canton_Provincia(string provincia, string canton);
+        #region bitacora
 
+        Task<(bool, string mensaje)> RegistrarBitacoraAsync(string accion, object descripcion, string accessToken, CancellationToken ct = default);
 
+        #endregion
     }
 }

@@ -16,7 +16,7 @@ namespace MAT03_Expedientes
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -28,6 +28,12 @@ namespace MAT03_Expedientes
 
                     }
                     var result = await service.Obtener_Todos_Expedientes();
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Obtener todos los expedientes",
+                       descripcion: result,
+                       accessToken: accessToken
+                   );
                     return Results.Ok(result);
                 }
                 catch (Exception ex)
@@ -46,7 +52,7 @@ namespace MAT03_Expedientes
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -62,6 +68,12 @@ namespace MAT03_Expedientes
                     {
                         return Results.NotFound(new { mensaje = mensaje });
                     }
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Obtener expediente por id",
+                       descripcion: expediente,
+                       accessToken: accessToken
+                   );
                     return Results.Ok(expediente);
                 }
                 catch (Exception ex)
@@ -82,7 +94,7 @@ namespace MAT03_Expedientes
                 {
                     // 1. Validar Token
 
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
                     var response = await httpClient.SendAsync(request);
 
@@ -96,7 +108,7 @@ namespace MAT03_Expedientes
 
                     // 2. Consumir API de usuarios para verificar existencia
 
-                    var usuarioRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:5000/usuario/id/{expediente.numero_identificacion}");
+                    var usuarioRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/USR1Usuarios/usuario/id/{expediente.numero_identificacion}");
                     usuarioRequest.Headers.Add("access_token", accessToken);
 
                     var usuarioResponse = await httpClient.SendAsync(usuarioRequest);
@@ -155,6 +167,12 @@ namespace MAT03_Expedientes
                     // 5. Crear expediente
 
                     var result = await service.CRUDExpediente(expediente);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Crear expediente",
+                       descripcion: expediente,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -172,7 +190,7 @@ namespace MAT03_Expedientes
                     
                     // 1. Validar Token
                     
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -189,7 +207,7 @@ namespace MAT03_Expedientes
                     
                     // 2. Consultar API de usuarios
                     
-                    var usuarioRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:5000/usuario/id/{expediente.numero_identificacion}");
+                    var usuarioRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/USR1Usuarios/usuario/id/{expediente.numero_identificacion}");
 
                     usuarioRequest.Headers.Add("access_token", accessToken);
 
@@ -250,6 +268,12 @@ namespace MAT03_Expedientes
                     // 6. Actualizar expediente
                     
                     var result = await service.CRUDExpediente(expediente);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Actualizar expediente",
+                       descripcion: result,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -266,7 +290,7 @@ namespace MAT03_Expedientes
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -286,6 +310,12 @@ namespace MAT03_Expedientes
 
                     
                     var result = await service.CRUDExpediente(expediente);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Eliminar expediente",
+                       descripcion: result,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -307,7 +337,7 @@ namespace MAT03_Expedientes
             //{
             //    try
             //    {
-            //        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+            //        var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
             //        request.Headers.Add("access_token", accessToken);
 
             //        var response = await httpClient.SendAsync(request);
@@ -340,7 +370,7 @@ namespace MAT03_Expedientes
             //   {
             //       try
             //       {
-            //           var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+            //           var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
             //           request.Headers.Add("access_token", accessToken);
 
             //           var response = await httpClient.SendAsync(request);
@@ -373,7 +403,7 @@ namespace MAT03_Expedientes
             //{
             //    try
             //    {
-            //        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+            //        var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
             //        request.Headers.Add("access_token", accessToken);
 
             //        var response = await httpClient.SendAsync(request);

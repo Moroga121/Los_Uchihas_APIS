@@ -10,5 +10,10 @@ namespace MAT05_Notas.Services
         Task<IResult> Obtener_Desglose_Por_ID(string grupo, string curso);
 
         Task<IResult> Obtener_Notas_By_Id(string numero_identificacion, string curso);
+        #region bitacora
+
+        Task<(bool, string mensaje)> RegistrarBitacoraAsync(string accion, object descripcion, string accessToken, CancellationToken ct = default);
+
+        #endregion
     }
 }

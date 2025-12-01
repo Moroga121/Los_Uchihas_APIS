@@ -1,6 +1,8 @@
 ﻿using MAT01_Prematricula.Entities;
 using MAT01_Prematricula.Services;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI.Common;
+using System.Data;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
@@ -18,7 +20,7 @@ namespace MAT01_Prematricula
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -31,6 +33,12 @@ namespace MAT01_Prematricula
                     }
 
                     var result = await service.Obtener_Todas_Prematriculas();
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Obtener todos las Prematriculas",
+                       descripcion: result,
+                       accessToken: accessToken
+                   );
                     return Results.Ok(result);
                 }
                 catch (Exception ex)
@@ -49,7 +57,7 @@ namespace MAT01_Prematricula
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -65,6 +73,12 @@ namespace MAT01_Prematricula
                     {
                         return Results.NotFound(new { mensaje = mensaje });
                     }
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Obtener prematricula por id",
+                       descripcion: prematricula,
+                       accessToken: accessToken
+                   );
                     return Results.Ok(prematricula);
                 }
                 catch (Exception ex)
@@ -87,7 +101,7 @@ namespace MAT01_Prematricula
                 try
                 {
                     // Validar token 
-                    var authRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var authRequest = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     authRequest.Headers.Add("access_token", accessToken);
 
                     var authResponse = await httpClient.SendAsync(authRequest);
@@ -99,7 +113,7 @@ namespace MAT01_Prematricula
 
                     // Validar Estudiante
 
-                    var estudianteRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:5000/usuario/id/{Uri.EscapeDataString(prematricula.numero_identificacion)}");
+                    var estudianteRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/USR1Usuarios/usuario/id/{Uri.EscapeDataString(prematricula.numero_identificacion)}");
                     estudianteRequest.Headers.Add("access_token", accessToken);
 
                     var estudianteResponse = await httpClient.SendAsync(estudianteRequest);
@@ -219,7 +233,12 @@ namespace MAT01_Prematricula
 
                     prematricula.Accion = "Crear";
                     var result = await service.CRUDPrematricula(prematricula);
-
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Crear prematricula",
+                       descripcion: prematricula,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -241,7 +260,7 @@ namespace MAT01_Prematricula
                 try
                 {
                     
-                    var authRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var authRequest = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     authRequest.Headers.Add("access_token", accessToken);
 
                     var authResponse = await httpClient.SendAsync(authRequest);
@@ -251,7 +270,7 @@ namespace MAT01_Prematricula
                     }
 
                     
-                    var estudianteRequest = new HttpRequestMessage(HttpMethod.Get,$"http://localhost:5000/usuario/id/{Uri.EscapeDataString(prematricula.numero_identificacion)}");
+                    var estudianteRequest = new HttpRequestMessage(HttpMethod.Get,$"https://tiusr21pl.cuc-carrera-ti.ac.cr/USR1Usuarios/usuario/id/{Uri.EscapeDataString(prematricula.numero_identificacion)}");
                     
                     estudianteRequest.Headers.Add("access_token", accessToken);
 
@@ -368,8 +387,14 @@ namespace MAT01_Prematricula
 
 
                     prematricula.Accion = "Actualizar";
-                    var result = await service.CRUDPrematricula(prematricula);
 
+                    var result = await service.CRUDPrematricula(prematricula);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Actualizar prematricula",
+                       descripcion: result,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -395,7 +420,7 @@ namespace MAT01_Prematricula
                 try
                 {
                     // Validación del token
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -414,6 +439,12 @@ namespace MAT01_Prematricula
 
                     // Llamar al método del servicio
                     var result = await service.CRUDPrematricula(prematricula);
+                    // Registrar intento exitoso en la bitacora del login
+                    await service.RegistrarBitacoraAsync(
+                       accion: "Eliminar prematricula",
+                       descripcion: result,
+                       accessToken: accessToken
+                   );
                     return result;
                 }
                 catch (Exception ex)
@@ -426,104 +457,6 @@ namespace MAT01_Prematricula
 
             #endregion
 
-            #region "CRUD Desactualizada"
-
-            //group.MapPost("/", async (
-            //    [FromServices] Services.IPrematriculaService service,
-            //    [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
-            //{
-            //    try
-            //    {
-            //        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
-            //        request.Headers.Add("access_token", accessToken);
-
-            //        var response = await httpClient.SendAsync(request);
-
-            //        if (!response.IsSuccessStatusCode)
-            //        {
-
-            //            return Results.Unauthorized();
-
-            //        }
-
-            //        prematricula.Accion = "Crear";
-            //        var result = await service.CRUDPrematricula(prematricula);
-            //        return result;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return Results.BadRequest(new { mensaje = ex.Message });
-            //    }
-            //})
-            //.WithName("RealizarPrematricula")
-            //.WithOpenApi();
-
-
-
-            // Actualizar Prematricula
-
-            //   group.MapPut("/", async (
-            //    [FromServices] Services.IPrematriculaService service,
-            //    [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
-            //   {
-            //       try
-            //       {
-            //           var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
-            //           request.Headers.Add("access_token", accessToken);
-
-            //           var response = await httpClient.SendAsync(request);
-
-            //           if (!response.IsSuccessStatusCode)
-            //           {
-
-            //               return Results.Unauthorized();
-
-            //           }
-
-            //           prematricula.Accion = "Actualizar";
-            //           var result = await service.CRUDPrematricula(prematricula);
-            //           return result;
-            //       }
-            //       catch (Exception ex)
-            //       {
-            //           return Results.BadRequest(new { mensaje = ex.Message });
-            //       }
-            //   })
-            //.WithName("UpdatePrematricula")
-            //.WithOpenApi();
-
-
-
-            //// Eliminar Prematricula
-            //group.MapDelete("/", async (
-            // [FromServices] Services.IPrematriculaService service,
-            // [FromBody] Entities.Prematricula prematricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
-            //{
-            //    try
-            //    {
-            //        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
-            //        request.Headers.Add("access_token", accessToken);
-
-            //        var response = await httpClient.SendAsync(request);
-
-            //        if (!response.IsSuccessStatusCode)
-            //        {
-
-            //            return Results.Unauthorized();
-
-            //        }
-
-            //        prematricula.Accion = "Eliminar";
-            //        var result = await service.CRUDPrematricula(prematricula);
-            //        return result;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return Results.BadRequest(new { mensaje = ex.Message });
-            //    }
-            //});
-
-            #endregion
 
         }
 
