@@ -28,6 +28,17 @@ namespace MAT03_Expedientes
 
                     }
                     var result = await service.Obtener_Todos_Expedientes();
+
+                    // Registrar en bitacora
+
+                    await service.RegistrarBitacoraAsync(
+                        
+                        accion: "Obtener todos los Expedientes",
+                        descripcion: result,
+                        accessToken: accessToken
+
+                        );
+
                     return Results.Ok(result);
                 }
                 catch (Exception ex)
@@ -62,6 +73,16 @@ namespace MAT03_Expedientes
                     {
                         return Results.NotFound(new { mensaje = mensaje });
                     }
+
+                    // Registrar en bitacora
+
+                    await service.RegistrarBitacoraAsync(
+                        
+                        accion: "Obtener Expediente por ID",
+                        descripcion: expediente,
+                        accessToken: accessToken
+                        );
+
                     return Results.Ok(expediente);
                 }
                 catch (Exception ex)
@@ -155,6 +176,16 @@ namespace MAT03_Expedientes
                     // 5. Crear expediente
 
                     var result = await service.CRUDExpediente(expediente);
+
+                    // Registrar en bitacora
+
+                    await service.RegistrarBitacoraAsync(
+                        
+                        accion: "Crear Expediente",
+                        descripcion: result,
+                        accessToken: accessToken
+                        );
+
                     return result;
                 }
                 catch (Exception ex)
@@ -245,12 +276,32 @@ namespace MAT03_Expedientes
 
                     expediente.Accion = "Actualizar";
 
+                    var (expedienteAntes, m_a) = await service.Obtener_Expediente_Por_ID(expediente.numero_identificacion);
 
-                    
+                    var expedienteactualizado = await service.CRUDExpediente(expediente);
+
+                    var (usuarioDespues, m_d) = await service.Obtener_Expediente_Por_ID(expediente.numero_identificacion);
+
+                    var antesYDespues = new
+                    {
+                        Antes = expedienteAntes,
+                        Despues = usuarioDespues
+                    };
+
+                    string descripcionJson = JsonSerializer.Serialize(antesYDespues);
+
+                    await service.RegistrarBitacoraAsync(
+                        
+                        accion: "Actualizar Expediente",
+                        descripcion: descripcionJson,
+                        accessToken: accessToken
+                        );
+
                     // 6. Actualizar expediente
-                    
-                    var result = await service.CRUDExpediente(expediente);
-                    return result;
+
+                    // var result = await service.CRUDExpediente(expediente);
+
+                    return expedienteactualizado;
                 }
                 catch (Exception ex)
                 {
@@ -286,6 +337,16 @@ namespace MAT03_Expedientes
 
                     
                     var result = await service.CRUDExpediente(expediente);
+
+                    // Registrar en bitacora
+
+                    await service.RegistrarBitacoraAsync(
+                        
+                        accion: "Eliminar Expediente",
+                        descripcion: result,
+                        accessToken: accessToken
+                        );
+
                     return result;
                 }
                 catch (Exception ex)

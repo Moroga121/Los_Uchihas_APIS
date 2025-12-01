@@ -29,6 +29,16 @@ namespace MAT02_Matricula
 
                 }
                 var result = await service.Obtener_Todas_Matriculas();
+
+                //Registrar en bitacora
+
+                await service.RegistrarBitacoraAsync(
+                    accion: "Consultar Matriculas",
+                    descripcion: result,
+                    accessToken: accessToken
+
+                    );
+
                 return Results.Ok(result);
 
             })
@@ -58,6 +68,13 @@ namespace MAT02_Matricula
                 // 3 Llamar al service CORRECTO
 
                 var result = await service.Obtener_Matriculados_Por_Curso_Grupo(curso, grupo);
+
+                await service.RegistrarBitacoraAsync(
+                   accion: "Obtener matriculados por curso y grupo",
+                   descripcion: result,
+                   accessToken: accessToken
+               );
+
 
                 return Results.Ok(result);
             })
@@ -208,6 +225,15 @@ namespace MAT02_Matricula
                     // 6️ Crear matrícula
                     matricula.Accion = "Crear";
                     var result = await service.CRUDMatricula(matricula);
+
+                    //Registrar en bitacora
+                    await service.RegistrarBitacoraAsync(
+                        accion: "Crear Matrícula",
+                        descripcion: result,
+                        accessToken: accessToken
+
+
+                        );
 
                     return result;
                 }
@@ -388,6 +414,12 @@ namespace MAT02_Matricula
 
                 // 9. Actualizar matrícula
                 matricula.Accion = "Actualizar";
+
+                
+
+                var matriculaactualizada = await service.CRUDMatricula(matricula);
+
+                
 
                 var result = await service.CRUDMatricula(matricula);
 
