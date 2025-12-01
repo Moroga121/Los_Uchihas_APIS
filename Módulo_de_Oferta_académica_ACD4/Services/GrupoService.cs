@@ -21,7 +21,7 @@ namespace Módulo_de_Oferta_académica_ACD4.Sercives
 
         public async Task<(bool, string mensaje)> RegistrarBitacoraAsync(string accion, object descripcion, string accessToken, CancellationToken ct = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/bitacora/registrar");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/GEN01Bitacora/bitacora/registrar");
 
             // Agregar token al header
             request.Headers.Add("access_token", accessToken);

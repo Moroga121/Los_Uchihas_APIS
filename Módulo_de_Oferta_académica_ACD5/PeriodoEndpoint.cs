@@ -12,7 +12,7 @@ namespace Módulo_de_Oferta_académica_ACD5
 
             group.MapGet("/", async ([FromServices] IPeriodoService periodoService, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -35,7 +35,7 @@ namespace Módulo_de_Oferta_académica_ACD5
 
             group.MapGet("/{id}", async ([FromServices] IPeriodoService periodoService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -62,7 +62,7 @@ namespace Módulo_de_Oferta_académica_ACD5
 
             group.MapPost("/", async ([FromServices] IPeriodoService periodoService, [FromBody] Periodo periodo, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -86,7 +86,7 @@ namespace Módulo_de_Oferta_académica_ACD5
 
             group.MapPut("/", async ([FromServices] IPeriodoService periodoService, [FromBody] Periodo periodo, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -110,7 +110,7 @@ namespace Módulo_de_Oferta_académica_ACD5
 
             group.MapDelete("/{id}", async ([FromServices] IPeriodoService periodoService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -141,7 +141,7 @@ namespace Módulo_de_Oferta_académica_ACD5
 
             group.MapGet("/validar", async ([FromServices] IPeriodoService service, [FromQuery] string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);

@@ -148,7 +148,7 @@ namespace MAT01_Prematricula
                     
                     var carreraRequest = new HttpRequestMessage(
                         HttpMethod.Get,
-                        $"http://localhost:7006/api/carrera/validar?nombre={prematricula.carrera}"
+                        $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD2CarrerasAvance3/api/carrera/validar?nombre={prematricula.carrera}"
                     );
                     carreraRequest.Headers.Add("access_token", accessToken);
 
@@ -166,7 +166,7 @@ namespace MAT01_Prematricula
 
                     // Validar curso y que coincida con la carrera
 
-                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7001/api/curso/validar?nombre={Uri.EscapeDataString(prematricula.curso)}");
+                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD3CursosAvance3/api/curso/validar?nombre={Uri.EscapeDataString(prematricula.curso)}");
                     cursoRequest.Headers.Add("access_token", accessToken);
                     var cursoResponse = await httpClient.SendAsync(cursoRequest);
 
@@ -200,7 +200,7 @@ namespace MAT01_Prematricula
 
                     // Validar Periodo
 
-                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7004/api/periodo/validar?id={Uri.EscapeDataString(prematricula.Id_Periodo)}");
+                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD5PeriodosAvance3/api/periodo/validar?id={Uri.EscapeDataString(prematricula.Id_Periodo)}");
 
                     periodoRequest.Headers.Add("access_token", accessToken);
 
@@ -299,7 +299,7 @@ namespace MAT01_Prematricula
 
                     }
                         
-                    var carreraRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7006/api/carrera/validar?nombre={Uri.EscapeDataString(prematricula.carrera)}");
+                    var carreraRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD2CarrerasAvance3/api/carrera/validar?nombre={Uri.EscapeDataString(prematricula.carrera)}");
                     
                     carreraRequest.Headers.Add("access_token", accessToken);
 
@@ -321,7 +321,7 @@ namespace MAT01_Prematricula
 
 
 
-                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7001/api/curso/validar?nombre={Uri.EscapeDataString(prematricula.curso)}");
+                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD3CursosAvance3/api/curso/validar?nombre={Uri.EscapeDataString(prematricula.curso)}");
                     cursoRequest.Headers.Add("access_token", accessToken);
                     var cursoResponse = await httpClient.SendAsync(cursoRequest);
 
@@ -353,7 +353,7 @@ namespace MAT01_Prematricula
 
 
 
-                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7004/api/periodo/validar?id={Uri.EscapeDataString(prematricula.Id_Periodo)}");
+                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD5PeriodosAvance3/api/periodo/validar?id={Uri.EscapeDataString(prematricula.Id_Periodo)}");
 
                     periodoRequest.Headers.Add("access_token", accessToken);
 

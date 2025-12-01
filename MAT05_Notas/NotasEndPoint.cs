@@ -32,7 +32,7 @@ namespace MAT05_Notas
                     }
                     /// Validar curso exista
 
-                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7001/api/curso/validar?nombre={Uri.EscapeDataString(desglose.nombre_curso)}");
+                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD3CursosAvance3/api/curso/validar?nombre={Uri.EscapeDataString(desglose.nombre_curso)}");
                     cursoRequest.Headers.Add("access_token", accessToken);
                     var cursoResponse = await httpClient.SendAsync(cursoRequest);
 
@@ -48,7 +48,7 @@ namespace MAT05_Notas
                         return Results.BadRequest(new { mensaje = "Error validando el curso" });
 
                     }
-                    var grupoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7003/api/grupo/{desglose.nombre_grupo}");
+                    var grupoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD4GruposAvance3/api/grupo/{desglose.nombre_grupo}");
                     grupoRequest.Headers.Add("access_token", accessToken);
 
                     var grupoResponse = await httpClient.SendAsync(grupoRequest);

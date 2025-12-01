@@ -3,43 +3,7 @@
     "Name": "Nuevo perfil",
     "Projects": [
       {
-        "Path": "Proyecto_PrograV\\Proyecto_PrograV.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "USR5_Login\\USR5_Login.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "USR4_Modulos\\USR4_Modulos.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "GEN01_Bitacora\\GEN01_Bitacora.csproj",
-        "Action": "Start"
-      },
-      {
         "Path": "MAT01_Prematricula\\MAT01_Prematricula.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "Módulo_de_Ofertas_académica_ACD2\\Módulo_de_Ofertas_académica_ACD2.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "Módulo_de_Oferta_académica_ACD3\\Módulo_de_Oferta_académica_ACD3.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "Módulo_de_Oferta_académica_ACD5\\Módulo_de_Oferta_académica_ACD5.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "Módulo_de_Oferta_académica_ACD4\\Módulo_de_Oferta_académica_ACD4.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "Módulo_de_Oferta_académica_ACD6\\Módulo_de_Oferta_académica_ACD6.csproj",
         "Action": "Start"
       },
       {

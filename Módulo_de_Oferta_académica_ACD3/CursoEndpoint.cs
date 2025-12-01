@@ -12,7 +12,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             group.MapGet("/", async ([FromServices] ICursoService service, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -33,7 +33,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             group.MapGet("/{id}", async ([FromServices] ICursoService service, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -54,7 +54,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             group.MapGet("/carrera/{idCarrera}", async ([FromServices] ICursoService service, string idCarrera, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -81,7 +81,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             group.MapPost("/", async ([FromServices] ICursoService service, [FromBody] Curso curso, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -103,7 +103,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             group.MapPut("/", async ([FromServices] ICursoService service, [FromBody] Curso curso, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -125,7 +125,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             group.MapDelete("/{id}", async ([FromServices] ICursoService service, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -150,7 +150,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             group.MapGet("/validar", async ([FromServices] ICursoService service, [FromQuery] string nombre, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -171,7 +171,7 @@ namespace Módulo_de_Oferta_académica_ACD3
 
             //group.MapGet("/validar", async ([FromServices] ICursoService service, [FromQuery] string nombre, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             //{
-            //    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+            //    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
             //    request.Headers.Add("access_token", accessToken);
 
             //    var response = await httpClient.SendAsync(request);

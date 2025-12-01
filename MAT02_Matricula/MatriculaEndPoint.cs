@@ -108,7 +108,7 @@ namespace MAT02_Matricula
 
                     }
 
-                    var prematriculaRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/Prematricula");
+                    var prematriculaRequest = new HttpRequestMessage(HttpMethod.Get, "https://tiusr21pl.cuc-carrera-ti.ac.cr/MAT01Prematricula/Prematricula");
                     prematriculaRequest.Headers.Add("access_token", accessToken);
                     var prematriculaResponse = await httpClient.SendAsync(prematriculaRequest);
 
@@ -130,7 +130,7 @@ namespace MAT02_Matricula
 
                     // 4️ Validar curso usando API de cursos
 
-                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7001/api/curso/validar?nombre={Uri.EscapeDataString(matricula.curso)}");
+                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD3CursosAvance3/api/curso/validar?nombre={Uri.EscapeDataString(matricula.curso)}");
                     cursoRequest.Headers.Add("access_token", accessToken);
                     var cursoResponse = await httpClient.SendAsync(cursoRequest);
 
@@ -153,7 +153,7 @@ namespace MAT02_Matricula
                     var curso = JsonSerializer.Deserialize<Curso>(cursoJson);
 
                     // 5️ Validar periodo futuro usando API de periodos
-                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7004/api/periodo/validar?id={Uri.EscapeDataString(matricula.Id_periodo)}");
+                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD5PeriodosAvance3/api/periodo/validar?id={Uri.EscapeDataString(matricula.Id_periodo)}");
                     periodoRequest.Headers.Add("access_token", accessToken);
                     var periodoResponse = await httpClient.SendAsync(periodoRequest);
 
@@ -190,7 +190,7 @@ namespace MAT02_Matricula
                     }
 
 
-                    var grupoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7003/api/grupo/{matricula.grupo}");
+                    var grupoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD4GruposAvance3/api/grupo/{matricula.grupo}");
                     grupoRequest.Headers.Add("access_token", accessToken);
 
                     var grupoResponse = await httpClient.SendAsync(grupoRequest);
@@ -268,7 +268,7 @@ namespace MAT02_Matricula
                     }
 
                     // 2. Obtener prematriculas
-                    var premRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/Prematricula");
+                    var premRequest = new HttpRequestMessage(HttpMethod.Get, "https://tiusr21pl.cuc-carrera-ti.ac.cr/MAT01Prematricula/Prematricula");
                     premRequest.Headers.Add("access_token", accessToken);
 
                     var premResponse = await httpClient.SendAsync(premRequest);
@@ -295,7 +295,7 @@ namespace MAT02_Matricula
 
                     // 4. Validar PERIODO usando API externa (igual al POST)
 
-                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7004/api/periodo/validar?id={Uri.EscapeDataString(matricula.Id_periodo)}");
+                    var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD5PeriodosAvance3/api/periodo/validar?id={Uri.EscapeDataString(matricula.Id_periodo)}");
                     periodoRequest.Headers.Add("access_token", accessToken);
 
                     var periodoResponse = await httpClient.SendAsync(periodoRequest);
@@ -332,7 +332,7 @@ namespace MAT02_Matricula
 
                     // 5. VALIDAR CURSO POR NOMBRE (igual que POST)
 
-                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7001/api/curso/validar?nombre={Uri.EscapeDataString(matricula.curso)}");
+                    var cursoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD3CursosAvance3/api/curso/validar?nombre={Uri.EscapeDataString(matricula.curso)}");
                     cursoRequest.Headers.Add("access_token", accessToken);
 
                     var cursoResponse = await httpClient.SendAsync(cursoRequest);
@@ -368,7 +368,7 @@ namespace MAT02_Matricula
 
                     // 6. Obtener grupo por ID
 
-                    var grupoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7003/api/grupo/{matricula.grupo}");
+                    var grupoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD4GruposAvance3/api/grupo/{matricula.grupo}");
                     grupoRequest.Headers.Add("access_token", accessToken);
 
                     var grupoResponse = await httpClient.SendAsync(grupoRequest);
@@ -472,83 +472,6 @@ namespace MAT02_Matricula
 
             #endregion
 
-            #region "CRUD MATRICULA DESACTUALIZADAS"
-
-            // Crear matricula
-
-            //   group.MapPost("/", async (
-            //       [FromServices] Services.IMatriculaService  service,
-            //       [FromBody] Entities.Matricula matricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
-            //   {
-
-            //           var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
-            //           request.Headers.Add("access_token", accessToken);
-
-            //           var response = await httpClient.SendAsync(request);
-
-            //           if (!response.IsSuccessStatusCode)
-            //           {
-
-            //               return Results.Unauthorized();
-
-            //           }
-            //           matricula.Accion = "Crear";
-            //           var result = await service.CRUDMatricula(matricula);
-            //           return result;
-
-            //   })
-            //   .WithName("RealizarMatricula")
-            //   .WithOpenApi();
-            //   // Actualizar matricula
-            //   group.MapPut("/", async (
-            //    [FromServices] Services.IMatriculaService service,
-            //    [FromBody] Entities.Matricula matricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
-            //   {
-
-            //           var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
-            //           request.Headers.Add("access_token", accessToken);
-
-            //           var response = await httpClient.SendAsync(request);
-
-            //           if (!response.IsSuccessStatusCode)
-            //           {
-
-            //               return Results.Unauthorized();
-
-            //           }
-            //           matricula.Accion = "Actualizar";
-            //           var result = await service.CRUDMatricula(matricula);
-            //           return result;
-
-
-            //   })
-            //.WithName("UpdateMatricula")
-            //.WithOpenApi();
-
-            //   // Eliminar matricula
-            //   group.MapDelete("/", async (
-            //    [FromServices] Services.IMatriculaService service,
-            //    [FromBody] Entities.Matricula matricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
-            //   {
-            //        var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
-            //           request.Headers.Add("access_token", accessToken);
-
-            //           var response = await httpClient.SendAsync(request);
-
-            //           if (!response.IsSuccessStatusCode)
-            //           {
-
-            //               return Results.Unauthorized();
-
-            //           }
-            //           matricula.Accion = "Eliminar";
-            //           var result = await service.CRUDMatricula(matricula);
-            //           return Results.Ok(result);
-
-            //   });
-
-
-            #endregion
 
         }
     }
