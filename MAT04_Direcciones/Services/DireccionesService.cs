@@ -53,6 +53,13 @@ namespace MAT04_Direcciones.Services
 
             return (distritos, mensajeSP);
         }
+
+        public async Task<IEnumerable<Direcciones>> Obtener_Direccion_Expediente(int id_distrito)
+        {
+            return await _direccionesRepository.Obtener_Direccion_Expediente(id_distrito);
+        }
+
+
         #region Bitacora
 
         public async Task<(bool, string mensaje)> RegistrarBitacoraAsync(string accion, object descripcion, string accessToken, CancellationToken ct = default)

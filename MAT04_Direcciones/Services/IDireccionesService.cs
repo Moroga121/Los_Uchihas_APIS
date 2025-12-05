@@ -1,4 +1,5 @@
-﻿using MySqlX.XDevAPI.Common;
+﻿using MAT04_Direcciones.Entities;
+using MySqlX.XDevAPI.Common;
 
 namespace MAT04_Direcciones.Services
 {
@@ -6,7 +7,7 @@ namespace MAT04_Direcciones.Services
     {
         Task<IEnumerable<Entities.Provincias>> Obtener_Todos_Provincias();
         Task<(IEnumerable<Entities.cantones> cantones, string mensaje)> Obtener_Cantones_Por_Provincia(string provincia);
-
+        Task<IEnumerable<Direcciones>> Obtener_Direccion_Expediente(int id_distrito);
         Task<(IEnumerable<Entities.distritos> distritos, string mensaje)> Obtener_Distritos_Por_Canton_Provincia(string provincia, string canton);
         #region bitacora
 

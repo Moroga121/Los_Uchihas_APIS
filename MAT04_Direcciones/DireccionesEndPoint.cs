@@ -8,6 +8,7 @@ namespace MAT04_Direcciones
     {
         public static void MapProvinciasEndPoints (this WebApplication app)
         {
+
             app.MapGet("/provincias", async (Services.IDireccionesService direccionesService, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
@@ -32,6 +33,31 @@ namespace MAT04_Direcciones
             })
             .WithName("GetProvincias")
             .Produces<IEnumerable<Entities.Provincias>>(StatusCodes.Status200OK)
+            .WithTags("Direcciones");
+
+            app.MapGet("/direccion", async (int id_distrito, Services.IDireccionesService direccionesService, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
+                request.Headers.Add("access_token", accessToken);
+
+                var response = await httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+
+                    return Results.Unauthorized();
+
+                }
+                var direccion = await direccionesService.Obtener_Direccion_Expediente(id_distrito);
+                await direccionesService.RegistrarBitacoraAsync(
+                   accion: "Obtener direcciones",
+                   descripcion: direccion,
+                   accessToken: accessToken
+               );
+                return Results.Ok(direccion);
+            })
+            .WithName("GetDireccion")
+            .Produces<IEnumerable<Entities.Direcciones>>(StatusCodes.Status200OK)
             .WithTags("Direcciones");
         }
         public static void MapCantonesEndPoints(this WebApplication app)

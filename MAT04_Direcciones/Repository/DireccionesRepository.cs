@@ -66,5 +66,21 @@ namespace MAT04_Direcciones.Repository
             return (cantones, mensaje);
         }
 
+
+
+
+        public async Task<IEnumerable<Direcciones>> Obtener_Direccion_Expediente(int id_distrito)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("p_distrito", id_distrito, DbType.Int32, ParameterDirection.Input);
+
+                var direccion = await connection.QueryAsync<Direcciones>("SP_Direccion_Expediente", parametros, commandType: CommandType.StoredProcedure);
+
+                return direccion;
+            }
+        }
+
     }
 }
