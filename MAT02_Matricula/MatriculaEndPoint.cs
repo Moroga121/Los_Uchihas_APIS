@@ -71,7 +71,18 @@ namespace MAT02_Matricula
                     // 3 Llamar al service CORRECTO
 
                     var result = await service.Obtener_Matriculados_Por_Curso_Grupo(curso, grupo);
-                    // Registrar intento exitoso en la bitacora del login
+
+                    // Esta Validación fue la que se agregó por si no encuentra nada
+
+                    if (result == null || !result.Any())
+                    {
+                        return Results.NotFound(new
+                        {
+                            mensaje = "No se encontraron matriculados para el curso y grupo especificado"
+                        });
+                    }
+
+                    
                     await service.RegistrarBitacoraAsync(
                        accion: "Obtener matriculados por curso y grupo",
                        descripcion: result,
