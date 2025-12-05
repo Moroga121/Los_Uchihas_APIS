@@ -8,6 +8,8 @@ namespace USR5_Login.Entities
         public string Email { get; set; } = string.Empty;
         public string Contrasena { get; set; } = string.Empty;
 
+        public string Identificacion { get; set; } = string.Empty;
+
         [JsonIgnore]
         public string Mensaje { get; set; } = null!;
     }

@@ -87,7 +87,8 @@ namespace USR5_Login.Services
                     expires_in = token.Expires_In,
                     access_token = token.Access_Token,
                     refresh_token = token.Refresh_Token,
-                    usuarioID = login.Email
+                    usuarioID = login.Email,
+                    Idetificacion = login.Identificacion
                 });
                 // Registrar intento exitoso en la bitacora del login
                 await RegistrarBitacoraAsync(
