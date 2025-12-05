@@ -67,31 +67,7 @@ namespace USR5_Login.Services
 
 
         #endregion
-        //public async Task<IResult> ValidarUsuarioAsync(Login login)
-        //{
-        //    if (string.IsNullOrWhiteSpace(login.Email) || string.IsNullOrWhiteSpace(login.Contrasena))
-        //    {
-        //        return Results.BadRequest(new { mensaje = "Usuario y contraseña son requeridos." });
-        //    }
-
-        //    login.Contrasena = Encrypt(login.Contrasena);
-        //    var resultado = await _loginRepository.ValidarUsuarioAsync(login);
-
-        //    if (resultado.Mensaje == "Login Exitoso")
-        //    {
-        //        var token = _tokenRepository.GenerarToken(login.Email);
-        //        return Results.Created("/login", new
-        //        {
-        //            expires_in = token.Expires_In,
-        //            access_token = token.Access_Token,
-        //            refresh_token = token.Refresh_Token,
-        //            usuarioID = login.Email
-        //        });
-        //    }
-
-        //    return Results.Json(new { mensaje = "Usuario y/o contraseña incorrectos" }, statusCode: 401);
-        //}
-
+        
         public async Task<IResult> ValidarUsuarioAsync(Login login)
         {
             if (string.IsNullOrWhiteSpace(login.Email) || string.IsNullOrWhiteSpace(login.Contrasena))
