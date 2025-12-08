@@ -67,6 +67,14 @@ namespace MAT01_Prematricula.Services
 
             return prematriculas;
         }
+
+        public async Task<IEnumerable<Prematricula>> Obtener_Prematricula_Por_Identificacion(string numero_identificacion)
+        {
+            var prematriculas = await _prematriculaRepository.Obtener_Prematricula_Por_Identificacion(numero_identificacion);
+            return prematriculas;
+        }
+
+
         public async Task<(Prematricula prematricula, string mensaje)> Obtener_Prematricula_Por_ID(string Id_Prematricula)
         {
             var prematriculas = await _prematriculaRepository.Obtener_Prematricula_Por_ID(Id_Prematricula);

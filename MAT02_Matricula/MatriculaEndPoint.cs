@@ -14,10 +14,54 @@ namespace MAT02_Matricula
         {
             var group = routes.MapGroup("/matricula").WithTags(nameof(MatriculaCompleta));
 
+
+            group.MapGet("/identificacion/{identificacion}", async ([FromServices] IMatriculaService service, [FromRoute] string identificacion, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                // 1 Validar token
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
+                request.Headers.Add("access_token", accessToken);
+
+                var response = await httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                    return Results.Unauthorized();
+
+                // 2️ Validar parámetro
+                if (string.IsNullOrWhiteSpace(identificacion))
+                {
+                    return Results.BadRequest(new
+                    {
+                        mensaje = "La identificación es obligatoria"
+                    });
+                }
+
+                // 3️ Llamar al service
+                var result = await service.Obtener_Matricula_Por_Identificacion(identificacion);
+
+                if (result == null || !result.Any())
+                {
+                    return Results.NotFound(new
+                    {
+                        mensaje = "No se encontraron matrículas para la identificación indicada"
+                    });
+                }
+
+                // 4️⃣ Registrar bitácora
+                await service.RegistrarBitacoraAsync(
+                    accion: "Obtener matrícula por identificación",
+                    descripcion: result,
+                    accessToken: accessToken
+                );
+
+                return Results.Ok(result);
+            })
+            .WithName("GetMatriculaPorIdentificacion")
+            .WithOpenApi();
+
             group.MapGet("/", async ([FromServices] Services.IMatriculaService service, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -50,7 +94,7 @@ namespace MAT02_Matricula
             {
                 // 1 Validar token
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -259,7 +303,7 @@ namespace MAT02_Matricula
             group.MapPut("/", async ([FromServices] Services.IMatriculaService service, [FromBody] Entities.Matricula matricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
                 // 1. Validar token
-                var authRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var authRequest = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/validate");
                 authRequest.Headers.Add("access_token", accessToken);
 
                 var authResponse = await httpClient.SendAsync(authRequest);
@@ -272,7 +316,7 @@ namespace MAT02_Matricula
                 }
 
                 // 2. Obtener prematriculas
-                var premRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/Prematricula");
+                var premRequest = new HttpRequestMessage(HttpMethod.Get, "https://tiusr21pl.cuc-carrera-ti.ac.cr/MAT01Prematricula");
                 premRequest.Headers.Add("access_token", accessToken);
 
                 var premResponse = await httpClient.SendAsync(premRequest);
@@ -299,7 +343,7 @@ namespace MAT02_Matricula
 
                 // 4. Validar PERIODO usando API externa (igual al POST)
 
-                var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:7004/api/periodo/validar?id={Uri.EscapeDataString(matricula.Id_periodo)}");
+                var periodoRequest = new HttpRequestMessage(HttpMethod.Get, $"https://tiusr21pl.cuc-carrera-ti.ac.cr/ACD5PeriodosAvance3/api/periodo/validar?id={Uri.EscapeDataString(matricula.Id_periodo)}");
                 periodoRequest.Headers.Add("access_token", accessToken);
 
                 var periodoResponse = await httpClient.SendAsync(periodoRequest);
@@ -439,7 +483,7 @@ namespace MAT02_Matricula
 
             group.MapDelete("/", async ([FromServices] Services.IMatriculaService service, [FromBody] Entities.Matricula matricula, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);

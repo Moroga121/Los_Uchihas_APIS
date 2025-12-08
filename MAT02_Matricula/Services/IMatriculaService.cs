@@ -5,6 +5,9 @@
         Task<IEnumerable<Entities.MatriculaCompleta>> Obtener_Todas_Matriculas();
         Task<IResult> CRUDMatricula(Entities.Matricula matricula);
         Task<IEnumerable<Entities.MatriculaCompleta>> Obtener_Matriculados_Por_Curso_Grupo(string curso, string grupo);
+
+        Task<IEnumerable<Entities.Matricula>> Obtener_Matricula_Por_Identificacion(string identificacion);
+
         #region Registro bitacora
         Task<(bool, string mensaje)> RegistrarBitacoraAsync(string accion, object descripcion, string accessToken, CancellationToken ct = default);
         #endregion

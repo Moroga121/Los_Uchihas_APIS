@@ -42,6 +42,41 @@ namespace MAT01_Prematricula
             .WithOpenApi();
 
 
+            // Obtener Prematricula por Número de Identificación
+            group.MapGet("/identificacion/{numero_identificacion}", async ([FromServices] Services.IPrematriculaService service, [FromRoute] string numero_identificacion, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+                {
+                    try
+                    {
+                        // Validar token
+                        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                        request.Headers.Add("access_token", accessToken);
+
+                        var response = await httpClient.SendAsync(request);
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            return Results.Unauthorized();
+                        }
+
+                        // Llamar al servicio para obtener prematricula(s) por identificación
+                        var prematriculas = await service.Obtener_Prematricula_Por_Identificacion(numero_identificacion);
+
+                        if (prematriculas == null || !prematriculas.Any())
+                        {
+                            return Results.NotFound(new { mensaje = "No se encontraron prematriculas para la identificación proporcionada" });
+                        }
+
+                        return Results.Ok(prematriculas);
+                    }
+                    catch (Exception ex)
+                    {
+                        return Results.BadRequest(new { mensaje = ex.Message });
+                    }
+                })
+                .WithName("GetPrematriculaPorIdentificacion")
+                .WithOpenApi();
+
+
+
             // Obtener Prematricula por ID
             group.MapGet("/{Id_Prematricula}", async (
                 [FromServices] Services.IPrematriculaService service,

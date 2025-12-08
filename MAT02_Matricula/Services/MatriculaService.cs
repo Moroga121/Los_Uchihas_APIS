@@ -18,7 +18,7 @@ namespace MAT02_Matricula.Services
             _httpClient = httpClient;
 
             if (_httpClient.BaseAddress == null)
-                _httpClient.BaseAddress = new Uri("http://localhost:9000/");
+                _httpClient.BaseAddress = new Uri("https://tiusr21pl.cuc-carrera-ti.ac.cr/GEN01Bitacora/");
         }
 
         #region "Registrar Bitácora"
@@ -26,7 +26,7 @@ namespace MAT02_Matricula.Services
 
         public async Task<(bool, string mensaje)> RegistrarBitacoraAsync(string accion, object descripcion, string accessToken, CancellationToken ct = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/bitacora/registrar");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/GEN01Bitacora/registrar");
 
             // Agregar token al header
             request.Headers.Add("access_token", accessToken);
@@ -114,6 +114,11 @@ namespace MAT02_Matricula.Services
 
             return Results.BadRequest(new { mensaje = mensajeSP });
 
+        }
+
+        public async Task<IEnumerable<Matricula>> Obtener_Matricula_Por_Identificacion(string identificacion)
+        {
+            return await _matriculaRepository.Obtener_Matricula_Por_Identificacion(identificacion);
         }
 
         public async Task<IEnumerable<MatriculaCompleta>> Obtener_Matriculados_Por_Curso_Grupo(string curso, string grupo)

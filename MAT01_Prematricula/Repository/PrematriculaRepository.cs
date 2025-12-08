@@ -95,5 +95,27 @@ namespace MAT01_Prematricula.Repository
         }
 
         #endregion
+
+
+        #region "Obtener Prematricula por Identificación"
+
+        public async Task<IEnumerable<Prematricula>> Obtener_Prematricula_Por_Identificacion(string numero_identificacion)
+        {
+            using var connection = _dbConnectionFactory.CreateConnection();
+
+            var parametros = new DynamicParameters();
+            parametros.Add("p_Identificacion", numero_identificacion, dbType: DbType.String, direction: ParameterDirection.Input);
+
+            var prematriculas = await connection.QueryAsync<Prematricula>(
+                "SP_ObtenerPrematriculaID",
+                parametros,
+                commandType: CommandType.StoredProcedure
+            );
+
+            return prematriculas;
+        }
+
+        #endregion
+
     }
 }
