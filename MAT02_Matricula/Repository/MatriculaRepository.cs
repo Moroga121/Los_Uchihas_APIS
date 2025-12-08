@@ -35,6 +35,24 @@ namespace MAT02_Matricula.Repository
         }
 
 
+        public async Task<IEnumerable<Matricula>> Obtener_Matricula_Por_Identificacion(string identificacion)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            {
+                var resultado = await connection.QueryAsync<Matricula>(
+                    "SP_ObtenerMatriculaPorIdentificacion",
+                    new
+                    {
+                        p_identificacion = identificacion
+                    },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return resultado;
+            }
+        }
+
+
         public async Task<IEnumerable<MatriculaCompleta>> Obtener_Matriculados_Por_Curso_Grupo(string curso, string grupo)
         {
             using (var connection = _dbConnectionFactory.CreateConnection())

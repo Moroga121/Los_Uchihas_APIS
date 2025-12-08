@@ -21,14 +21,15 @@ builder.Services.AddHttpClient();
 var app = builder.Build();
 
 
+app.UseSwagger();
+app.UseSwaggerUI();
 
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 app.MapMatriculaEndpoints();
 
-app.Run("http://localhost:6002");
+app.Run();

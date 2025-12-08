@@ -14,6 +14,50 @@ namespace MAT02_Matricula
         {
             var group = routes.MapGroup("/matricula").WithTags(nameof(MatriculaCompleta));
 
+
+            group.MapGet("/identificacion/{identificacion}", async ([FromServices] IMatriculaService service, [FromRoute] string identificacion, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
+            {
+                // 1 Validar token
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
+                request.Headers.Add("access_token", accessToken);
+
+                var response = await httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                    return Results.Unauthorized();
+
+                // 2️ Validar parámetro
+                if (string.IsNullOrWhiteSpace(identificacion))
+                {
+                    return Results.BadRequest(new
+                    {
+                        mensaje = "La identificación es obligatoria"
+                    });
+                }
+
+                // 3️ Llamar al service
+                var result = await service.Obtener_Matricula_Por_Identificacion(identificacion);
+
+                if (result == null || !result.Any())
+                {
+                    return Results.NotFound(new
+                    {
+                        mensaje = "No se encontraron matrículas para la identificación indicada"
+                    });
+                }
+
+                // 4️⃣ Registrar bitácora
+                await service.RegistrarBitacoraAsync(
+                    accion: "Obtener matrícula por identificación",
+                    descripcion: result,
+                    accessToken: accessToken
+                );
+
+                return Results.Ok(result);
+            })
+            .WithName("GetMatriculaPorIdentificacion")
+            .WithOpenApi();
+
             group.MapGet("/", async ([FromServices] Services.IMatriculaService service, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
                 try

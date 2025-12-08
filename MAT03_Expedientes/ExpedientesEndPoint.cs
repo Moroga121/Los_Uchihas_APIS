@@ -263,8 +263,27 @@ namespace MAT03_Expedientes
 
                     expediente.Accion = "Actualizar";
 
+                    var (expedienteAntes, m_a) = await service.Obtener_Expediente_Por_ID(expediente.numero_identificacion);
 
-                    
+                    var expedienteactualizado = await service.CRUDExpediente(expediente);
+
+                    var (usuarioDespues, m_d) = await service.Obtener_Expediente_Por_ID(expediente.numero_identificacion);
+
+                    var antesYDespues = new
+                    {
+                        Antes = expedienteAntes,
+                        Despues = usuarioDespues
+                    };
+
+                    string descripcionJson = JsonSerializer.Serialize(antesYDespues);
+
+                    await service.RegistrarBitacoraAsync(
+                        
+                        accion: "Actualizar Expediente",
+                        descripcion: descripcionJson,
+                        accessToken: accessToken
+                        );
+
                     // 6. Actualizar expediente
                     
                     var result = await service.CRUDExpediente(expediente);
