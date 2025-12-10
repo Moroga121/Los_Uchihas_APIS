@@ -18,7 +18,7 @@ namespace Facturacion
 
             group.MapPost("/", async ([FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient, [FromServices] IFacturaService facturaService, [FromBody] Factura factura) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -49,7 +49,7 @@ namespace Facturacion
             #region "Obtener factura por número"
             group.MapGet("/{numero}", async ([FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient, [FromServices] IFacturaService facturaService, long numero) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -82,7 +82,7 @@ namespace Facturacion
                                      [FromServices] IFacturaService facturaService,
                                      [FromQuery] string? periodo) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -113,7 +113,7 @@ namespace Facturacion
             group.MapPatch("/", async ([FromHeader(Name = "access_token")] string accessToken,HttpClient httpClient,[FromServices] IFacturaService facturaService,[FromBody] ReversarFactura request) =>
             {
                 // Validación del token
-                var requestValidate = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var requestValidate = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 requestValidate.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(requestValidate);
@@ -186,7 +186,7 @@ namespace Facturacion
                                      [FromServices] IFacturaService facturaService,
                                      [FromQuery] long idFactura) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);

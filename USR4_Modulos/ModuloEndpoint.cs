@@ -23,7 +23,7 @@ namespace USR4_Modulos
             group.MapGet("/", async ([FromServices] IModulosService moduloService, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -54,7 +54,7 @@ namespace USR4_Modulos
             group.MapGet("/por-rol-usuario", async ([FromServices] IModulosService moduloService, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -85,7 +85,7 @@ namespace USR4_Modulos
             group.MapGet("/por-id/{id}", async ([FromServices] IModulosService moduloService, string id, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -121,7 +121,7 @@ namespace USR4_Modulos
             group.MapGet("/por-rol/{rol}", async ([FromServices] IModulosService moduloService, string rol, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -171,7 +171,7 @@ namespace USR4_Modulos
              [FromServices] HttpClient httpClient) =>
                     {
                         // Validación del token
-                        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                        var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                         request.Headers.Add("access_token", accessToken);
 
                         var response = await httpClient.SendAsync(request);
@@ -196,7 +196,7 @@ namespace USR4_Modulos
             group.MapPut("/", async ([FromServices] IModulosService moduloService, [FromBody] Modulos modulo, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -242,7 +242,7 @@ namespace USR4_Modulos
             group.MapDelete("/{id}", async ([FromServices] IModulosService moduloService, string id, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -291,7 +291,7 @@ namespace USR4_Modulos
                 [FromServices] HttpClient httpClient) =>
             {
                 // Validar token llamando al endpoint de validación
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);

@@ -27,7 +27,7 @@ namespace GEN01_Bitacora
                 {
                     try
                     {
-                        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                        var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                         request.Headers.Add("access_token", accessToken);
 
                         var response = await httpClient.SendAsync(request);
@@ -93,7 +93,7 @@ namespace GEN01_Bitacora
                 try
                 {
                     
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
 
@@ -138,7 +138,7 @@ namespace GEN01_Bitacora
                         try
                         {
                             // Validar el token con el microservicio de login
-                            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                            var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                             request.Headers.Add("access_token", accessToken);
 
                             var response = await httpClient.SendAsync(request);

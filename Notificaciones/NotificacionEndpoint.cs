@@ -20,7 +20,7 @@ namespace Notificaciones
                 try
                 {
                     // Validar token de acceso
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -81,7 +81,7 @@ namespace Notificaciones
             {
                 try
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
@@ -117,7 +117,7 @@ namespace Notificaciones
                 try
                 {
                     // Validar token
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);

@@ -23,7 +23,7 @@ namespace USR3_Parametrización
             group.MapGet("/", async ([FromServices] IParametrizacionService parametroService, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
                 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -54,7 +54,7 @@ namespace USR3_Parametrización
             group.MapGet("/{id}", async ([FromServices] IParametrizacionService parametroService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
                 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -104,7 +104,7 @@ namespace USR3_Parametrización
             group.MapPost("/", async ([FromServices] IParametrizacionService parametrizacionService, [FromBody] Parametrizacion parametrizacion, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -137,7 +137,7 @@ namespace USR3_Parametrización
             group.MapPut("/", async ([FromServices] IParametrizacionService parametrizacionService, [FromBody] Parametrizacion parametrizacion, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -182,7 +182,7 @@ namespace USR3_Parametrización
             group.MapDelete("/{id}", async ([FromServices] IParametrizacionService parametrizacionService, string id, [FromHeader(Name = "access_token")] string accessToken, [FromServices] HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);

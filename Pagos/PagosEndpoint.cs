@@ -21,7 +21,7 @@ namespace Pagos
                 [FromServices] IPagosService pagoService,
                 [FromBody] CrearPagoRequest request) =>
             {
-                var validationRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var validationRequest = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 validationRequest.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(validationRequest);
@@ -56,7 +56,7 @@ namespace Pagos
             #region Obtener Pago por Número
             group.MapGet("/{numero}", async ([FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient, [FromServices] IPagosService pagoService, int numero) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -86,7 +86,7 @@ namespace Pagos
             #region Obtener Pago por Número
             group.MapGet("/f/{numero}", async ([FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient, [FromServices] IPagosService pagoService, int numero) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -110,7 +110,7 @@ namespace Pagos
             #region Obtener Pago por Número
             group.MapGet("/a/", async ([FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient, [FromServices] IPagosService pagoService) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -139,7 +139,7 @@ namespace Pagos
             #region Listar Pagos por Periodo
             group.MapGet("/", async ([FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient, [FromServices] IPagosService pagoService, [FromQuery] string periodo) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -173,7 +173,7 @@ namespace Pagos
                 HttpClient httpClient,
                 [FromServices] IPagosService pagoService) =>
             {
-                var validationRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var validationRequest = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 validationRequest.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(validationRequest);

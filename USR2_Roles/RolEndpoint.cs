@@ -24,7 +24,7 @@ namespace USR2_Roles
             group.MapGet("/", async ([FromServices] IRolService usuarioService, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -58,7 +58,7 @@ namespace USR2_Roles
             group.MapGet("/{id}", async ([FromServices] IRolService usuarioService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -107,7 +107,7 @@ namespace USR2_Roles
             group.MapPost("/", async ([FromServices] IRolService usuarioService, [FromBody] Rol rol, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -139,7 +139,7 @@ namespace USR2_Roles
             group.MapPut("/", async ([FromServices] IRolService usuarioService, [FromBody] Rol rol, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -187,7 +187,7 @@ namespace USR2_Roles
             group.MapDelete("/{id}", async ([FromServices] IRolService usuarioService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -232,7 +232,7 @@ namespace USR2_Roles
                 [FromServices] HttpClient httpClient) =>
             {
                 // Validar token llamando al endpoint de validación
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);

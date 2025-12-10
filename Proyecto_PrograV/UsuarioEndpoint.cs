@@ -21,7 +21,7 @@ namespace Proyecto_PrograV
 
             group.MapGet("/tipos_identificacion", async ([FromServices] IUsuarioService usuarioService, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -52,7 +52,7 @@ namespace Proyecto_PrograV
             group.MapPut("/cambiar_contrasena", async ([FromServices] IUsuarioService usuarioService, [FromBody] Usuario usuario, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
                 // Validar token
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -82,7 +82,7 @@ namespace Proyecto_PrograV
 
             group.MapGet("/dominios", async ([FromServices] IUsuarioService usuarioService, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -115,7 +115,7 @@ namespace Proyecto_PrograV
             {
 
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -150,7 +150,7 @@ namespace Proyecto_PrograV
             group.MapGet("/id/{id}", async ([FromServices] IUsuarioService usuarioService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -180,7 +180,7 @@ namespace Proyecto_PrograV
             group.MapGet("/{id}", async ([FromServices] IUsuarioService usuarioService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -216,7 +216,7 @@ namespace Proyecto_PrograV
             group.MapGet("/filtrar", async ([FromServices] IUsuarioService usuarioService, string identificacion, string nombre, string rol, string tipo, string dominio, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -256,7 +256,7 @@ namespace Proyecto_PrograV
             group.MapPost("/", async ([FromServices] IUsuarioService usuarioService, [FromBody] Usuario usuario, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -289,7 +289,7 @@ namespace Proyecto_PrograV
             group.MapPut("/", async ([FromServices] IUsuarioService usuarioService, [FromBody] Usuario usuario, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -336,7 +336,7 @@ namespace Proyecto_PrograV
             group.MapDelete("/{id}", async ([FromServices] IUsuarioService usuarioService, string id, [FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient) =>
             {
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);

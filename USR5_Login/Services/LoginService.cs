@@ -27,7 +27,7 @@ namespace USR5_Login.Services
 
         public async Task<(bool, string mensaje)> RegistrarBitacoraAsync(string email,string accion, object descripcion,CancellationToken ct = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/bitacora/registrar");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/GEN01Bitacora/bitacora/registrar");
 
          
             // Crear el JSON a enviar

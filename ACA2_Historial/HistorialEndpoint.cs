@@ -16,7 +16,7 @@ namespace ACA2_Historial
 
             group.MapGet("/", async ([FromHeader(Name = "access_token")] string accessToken, HttpClient httpClient, [FromServices] IHistorialService historialService, [FromQuery] string periodo) =>
             {
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                 request.Headers.Add("access_token", accessToken);
 
                 var response = await httpClient.SendAsync(request);
@@ -53,7 +53,7 @@ namespace ACA2_Historial
                        HttpClient httpClient,
                        [FromServices] IHistorialService service) =>
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/login/validate");
+                    var request = new HttpRequestMessage(HttpMethod.Post, "https://tiusr21pl.cuc-carrera-ti.ac.cr/USR5Login/login/validate");
                     request.Headers.Add("access_token", accessToken);
 
                     var response = await httpClient.SendAsync(request);
